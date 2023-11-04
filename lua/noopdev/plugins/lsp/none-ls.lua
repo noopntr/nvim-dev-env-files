@@ -17,7 +17,6 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"eslint_d", -- js linter
-				"csharpier", -- csharp formatter
 			},
 		})
 
@@ -41,7 +40,6 @@ return {
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
 				formatting.isort,
-				formatting.csharpier,
 				diagnostics.pylint,
 				diagnostics.eslint_d.with({ -- js/ts linter
 					condition = function(utils)
