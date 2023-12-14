@@ -1,15 +1,18 @@
 return {
 	{
-		"bluz71/vim-nightfly-colors",
+		"nyoom-engineering/oxocarbon.nvim",
 		priority = 1000, -- make sure to load this before all the other start plugins
 		config = function()
 			-- load the colorscheme here
-			vim.cmd([[colorscheme nightfly]])
+			vim.cmd([[colorscheme oxocarbon]])
+			vim.opt.background = "dark"
+			-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 		end,
 	},
-	{
-		"tribela/vim-transparent",
-	},
+	-- {
+	-- "tribela/vim-transparent",
+	-- },
 	-- {
 	--   "folke/tokyonight.nvim",
 	--   priority = 1000, -- make sure to load this before all the other start plugins
