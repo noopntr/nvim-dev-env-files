@@ -11,6 +11,7 @@ return {
 		local null_ls = require("null-ls")
 
 		local null_ls_utils = require("null-ls.utils")
+		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 		mason_null_ls.setup({
 			ensure_installed = {
@@ -23,9 +24,6 @@ return {
 		-- for conciseness
 		local formatting = null_ls.builtins.formatting -- to setup formatters
 		local diagnostics = null_ls.builtins.diagnostics -- to setup linters
-
-		-- to setup format on save
-		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 		-- configure null_ls
 		null_ls.setup({
@@ -40,7 +38,8 @@ return {
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
 				formatting.isort,
-				diagnostics.pylint,
+				formatting.gofumpt,
+				formatting.goimports_reviser,
 				diagnostics.eslint_d.with({ -- js/ts linter
 					condition = function(utils)
 						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
