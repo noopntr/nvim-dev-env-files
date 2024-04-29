@@ -1,14 +1,22 @@
 return {
 	{
-		"nyoom-engineering/oxocarbon.nvim",
-		priority = 1000, -- make sure to load this before all the other start plugins
+		"sainnhe/sonokai",
+		priority = 1000,
 		config = function()
-			-- load the colorscheme here
-			vim.cmd([[colorscheme oxocarbon]])
-			vim.opt.background = "dark"
-			-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+			vim.g.sonokai_transparent_background = "1"
+			vim.g.sonokai_enable_italic = "1"
+			vim.g.sonokai_style = "andromeda"
+			vim.cmd.colorscheme("sonokai")
 		end,
+		-- "nyoom-engineering/oxocarbon.nvim",
+		-- priority = 1000, -- make sure to load this before all the other start plugins
+		-- config = function()
+		-- load the colorscheme here
+		-- vim.cmd([[colorscheme oxocarbon]])
+		-- vim.opt.background = "dark"
+		-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+		-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+		-- end,
 	},
 	-- {
 	-- "tribela/vim-transparent",
