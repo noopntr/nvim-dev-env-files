@@ -27,21 +27,22 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"tsserver",
+				-- "tsserver",
+				"ts_ls",
 				"html",
 				"cssls",
 				"clangd",
 				"cssmodules_ls",
 				"quick_lint_js",
 				"clangd",
-				"rust_analyzer",
+				-- "rust_analyzer",
 				"tailwindcss",
-				"svelte",
 				"lua_ls",
 				"graphql",
 				"emmet_ls",
 				"prismals",
 				"gopls",
+				"golangci_lint_ls",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed
