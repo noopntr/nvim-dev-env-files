@@ -11,7 +11,7 @@ return {
   {
     "craftzdog/solarized-osaka.nvim",
     lazy = false,
-    priority = 1000,
+    priority = 1001,
     opts = function()
       return {
         transparent = true,
@@ -19,7 +19,7 @@ return {
     end,
   },
   {
-    "folke/tokyonight.nvim",
+    "marko-cerovac/material.nvim",
     lazy = false,
     priority = 1000,
     opts = function()
@@ -28,4 +28,24 @@ return {
       }
     end,
   },
+  -- {
+  --   "catppuccin/nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = function()
+  --     return {
+  --       transparent = true,
+  --     }
+  --   end,
+  -- },
+  -- {
+  --   "oxfist/night-owl.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = function()
+  --     return {
+  --       transparent = true,
+  --     }
+  --   end,
+  -- },
 }
