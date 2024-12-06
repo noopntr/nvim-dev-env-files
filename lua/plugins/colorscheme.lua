@@ -1,5 +1,5 @@
 return {
-  -- "sainnhe/sonokai",
+  -- { "sainnhe/sonokai",
   -- lazy = true,
   -- priority = 1000,
   -- config = function()
@@ -8,6 +8,7 @@ return {
   --   vim.g.sonokai_style = "andromeda"
   --   vim.cmd.colorscheme("sonokai")
   -- end,
+  -- },
   {
     "craftzdog/solarized-osaka.nvim",
     lazy = false,
@@ -18,16 +19,16 @@ return {
       }
     end,
   },
-  {
-    "marko-cerovac/material.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = function()
-      return {
-        transparent = true,
-      }
-    end,
-  },
+  -- {
+  --   "marko-cerovac/material.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = function()
+  --     return {
+  --       transparent = true,
+  --     }
+  --   end,
+  -- },
   -- {
   --   "catppuccin/nvim",
   --   lazy = false,

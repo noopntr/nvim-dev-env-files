@@ -122,13 +122,17 @@ return {
   -- },
 
   -- statusline
-  -- statusline
   {
     "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      local LazyVim = require("lazyvim.util")
-      opts.sections.lualine_c[4] = {
-        LazyVim.lualine.pretty_path({
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- Optional for icons
+    config = function()
+      require("lualine").setup({
+        options = {
+          theme = "auto", -- Use theme that matches your colorscheme
+          section_separators = { left = "", right = "" },
+          component_separators = { left = "", right = "" },
+          disabled_filetypes = { "NvimTree", "packer" }, -- Disable lualine in specific buffers
+
           length = 0,
           relative = "cwd",
           modified_hl = "MatchParen",
@@ -136,11 +140,27 @@ return {
           filename_hl = "Bold",
           modified_sign = "",
           readonly_icon = " 󰌾 ",
-        }),
-      }
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", "diff", "diagnostics" },
+          lualine_c = { { "filename", path = 1 } }, -- Show full path
+          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { { "filename", path = 1 } },
+          lualine_x = { "location" },
+          lualine_y = {},
+          lualine_z = {},
+        },
+        extensions = { "quickfix", "fugitive", "nvim-tree" },
+      })
     end,
   },
-
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -166,10 +186,18 @@ return {
       ██║╚██╗██║██║   ██║██║   ██║██╔═══╝ ██║╚██╗██║   ██║   ██╔══██╗
       ██║ ╚████║╚██████╔╝╚██████╔╝██║     ██║ ╚████║   ██║   ██║  ██║
       ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝     ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝
-      ]]
+    ]]
 
+      -- Add padding and split the logo into lines
       logo = string.rep("\n", 8) .. logo .. "\n\n"
+      opts.config = opts.config or {}
       opts.config.header = vim.split(logo, "\n")
+
+      return opts
+    end,
+    config = function(_, opts)
+      -- Ensure dashboard is loaded with the modified configuration
+      require("dashboard").setup(opts.config)
     end,
   },
 }

@@ -26,6 +26,7 @@ return {
         "gitignore",
         "query",
         -- "c",
+        "gosum",
         "go",
       },
 

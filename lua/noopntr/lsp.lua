@@ -71,33 +71,44 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    -- configure html server
+    -- Server configurations
+    -- HTML
     lspconfig["html"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure typescript server with plugin
-    lspconfig["tsserver"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- configure css server
+    -- CSS and SCSS
     lspconfig["cssls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure tailwindcss server
+    -- JavaScript and TypeScript (Node, Express)
+    lspconfig["tsserver"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+    })
+
+    -- TailwindCSS
     lspconfig["tailwindcss"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
+      filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte" },
+      root_dir = util.root_pattern(
+        "tailwind.config.js",
+        "tailwind.config.cjs",
+        "tailwind.config.ts",
+        "postcss.config.js",
+        ".git"
+      ),
     })
 
+    -- Go
     lspconfig["gopls"].setup({
-      on_attach = on_attach,
       capabilities = capabilities,
+      on_attach = on_attach,
       cmd = { "gopls" },
       filetypes = { "go", "gomod", "gowork", "gotmpl" },
       root_dir = util.root_pattern("go.work", "go.mod", ".git"),
@@ -112,54 +123,29 @@ return {
       },
     })
 
-    -- configure svelte server
-    lspconfig["svelte"].setup({
+    -- Emmet (for JSX, HTML, CSS)
+    lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
-      on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-
-        vim.api.nvim_create_autocmd("BufWritePost", {
-          pattern = { "*.js", "*.ts" },
-          callback = function(ctx)
-            if client.name == "svelte" then
-              client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-            end
-          end,
-        })
-      end,
+      on_attach = on_attach,
+      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
     })
 
-    -- configure prisma orm server
+    -- Prisma (Optional, for database-related projects)
     lspconfig["prismals"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure graphql language server
-    lspconfig["graphql"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-    })
-
-    -- configure emmet language server
-    lspconfig["emmet_ls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-    })
-
+    -- Lua (for Neovim configuration)
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = { -- custom settings for lua
+      settings = {
         Lua = {
-          -- make the language server recognize "vim" global
           diagnostics = {
-            globals = { "vim" },
+            globals = { "vim" }, -- Recognize `vim` as a global
           },
           workspace = {
-            -- make language server aware of runtime files
             library = {
               [vim.fn.expand("$VIMRUNTIME/lua")] = true,
               [vim.fn.stdpath("config") .. "/lua"] = true,
