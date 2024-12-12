@@ -88,7 +88,7 @@ return {
       },
     },
   },
-  --
+
   -- filename
   -- {
   --   "b0o/incline.nvim",
