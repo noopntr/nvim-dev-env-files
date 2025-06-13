@@ -132,6 +132,18 @@ return {
       },
     })
 
+    -- Ruby (Solargraph)
+    lspconfig["solargraph"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      root_dir = util.root_pattern("Gemfile", ".git", "*.gemspec"),
+      settings = {
+        solargraph = {
+          diagnostics = true,
+        },
+      },
+    })
+
     -- Emmet (for JSX, HTML, CSS)
     lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
