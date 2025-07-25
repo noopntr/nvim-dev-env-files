@@ -172,11 +172,16 @@ return {
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",
         winblend = 0,
+        vimgrep_arguments = (function()
+          local vimgrep_arguments = require("telescope.config").values.vimgrep_arguments
+          table.insert(vimgrep_arguments, "--fixed-strings") -- 🪄 the fix
+          table.insert(vimgrep_arguments, "--hidden")
+          return vimgrep_arguments
+        end)(),
         mappings = {
           n = {},
         },
-      })
-      opts.pickers = {
+      })({
         diagnostics = {
           theme = "ivy",
           initial_mode = "normal",
@@ -184,7 +189,7 @@ return {
             preview_cutoff = 9999,
           },
         },
-      }
+      })
       opts.extensions = {
         file_browser = {
           theme = "dropdown",
