@@ -1,7 +1,7 @@
 return {
   {
-    enabled = false,
     "folke/flash.nvim",
+    enabled = true,
     ---@type Flash.Config
     opts = {
       search = {
@@ -58,7 +58,7 @@ return {
   -- },
 
   {
-    "telescope.nvim",
+    "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
