@@ -65,7 +65,7 @@ return {
 
     -- Change the Diagnostic symbols in the sign column (gutter)
     -- (not in youtube nvim video)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
@@ -91,18 +91,73 @@ return {
       root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
     })
 
-    -- TailwindCSS
+    -- TailwindCSS with v4 support
     lspconfig["tailwindcss"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte" },
+      filetypes = {
+        "html",
+        "css",
+        "scss",
+        "sass",
+        "less",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte",
+        "vue",
+        "astro",
+      },
       root_dir = util.root_pattern(
-        "tailwind.config.js",
-        "tailwind.config.cjs",
+        -- Tailwind v4 configuration files
         "tailwind.config.ts",
+        "tailwind.config.js",
+        "tailwind.config.mjs",
+        "tailwind.config.cjs",
+        -- CSS files that might contain @config directive (v4 feature)
+        "@config",
+        -- Traditional config files (still supported in v4)
         "postcss.config.js",
+        "postcss.config.cjs",
+        "postcss.config.mjs",
+        "postcss.config.ts",
+        -- Package.json with tailwindcss dependency
+        "package.json",
+        -- Fallback to git root
         ".git"
       ),
+      settings = {
+        tailwindCSS = {
+          -- Enable experimental features for v4
+          experimental = {
+            classRegex = {
+              -- Standard class detection
+              "class[:]\\s*['\"`]([^'\"`]*)['\"`]",
+              "className[:]\\s*['\"`]([^'\"`]*)['\"`]",
+              -- Support for template literals and dynamic classes
+              "tw\\`([^`]*)",
+              "tw['\"]([^'\"]*)['\"]",
+              "tw\\.\\w+\\`([^`]*)",
+              "tw\\(.*?\\)\\`([^`]*)",
+            },
+          },
+          -- Include CSS files for @config directive detection
+          includeLanguages = {
+            css = "css",
+            scss = "css",
+            sass = "css",
+          },
+          -- Validate classes in more file types
+          validate = true,
+          -- Enable completions in string literals
+          classAttributes = {
+            "class",
+            "className",
+            "class:list",
+            "classList",
+            "ngClass",
+          },
+        },
+      },
     })
 
     -- Go
