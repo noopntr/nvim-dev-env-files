@@ -85,7 +85,7 @@ return {
     }
 
     -- Diagnostic signs in the gutter
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    local signs = { Error = "✗ ", Warn = "⚠ ", Hint = "💡", Info = "ℹ " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
@@ -102,10 +102,10 @@ return {
       },
       signs = {
         text = {
-          [vim.diagnostic.severity.ERROR] = " ",
-          [vim.diagnostic.severity.WARN] = " ",
-          [vim.diagnostic.severity.HINT] = "󰠠 ",
-          [vim.diagnostic.severity.INFO] = " ",
+          [vim.diagnostic.severity.ERROR] = "✗ ",
+          [vim.diagnostic.severity.WARN] = "⚠ ",
+          [vim.diagnostic.severity.HINT] = "💡",
+          [vim.diagnostic.severity.INFO] = "ℹ ",
         },
       },
       underline = true,
