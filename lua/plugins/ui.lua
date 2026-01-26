@@ -81,10 +81,22 @@ return {
   -- filename
   {
     "b0o/incline.nvim",
-    event = "BufReadPre",
+    dependencies = { "craftzdog/solarized-osaka.nvim" },
+    event = "VeryLazy",
     priority = 1200,
     config = function()
-      local colors = require("solarized-osaka.colors").setup()
+      -- Safely get colors with fallback
+      local ok, solarized_colors = pcall(function()
+        return require("solarized-osaka.colors").setup()
+      end)
+
+      local colors = ok and solarized_colors or {
+        magenta500 = "#d33682",
+        base04 = "#002b36",
+        violet500 = "#6c71c4",
+        base03 = "#073642",
+      }
+
       require("incline").setup({
         highlight = {
           groups = {

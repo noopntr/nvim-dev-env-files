@@ -223,7 +223,7 @@ return {
             result.diagnostics = filtered_diagnostics
           end
 
-          vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+          vim.lsp.handlers["textDocument/publishDiagnostics"](err, result, ctx)
         end,
       },
     })

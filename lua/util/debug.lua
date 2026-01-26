@@ -12,7 +12,7 @@ function M.get_loc()
   end
   info = info or me
   local source = info.source:sub(2)
-  source = vim.loop.fs_realpath(source) or source
+  source = (vim.uv or vim.loop).fs_realpath(source) or source
   return source .. ":" .. info.linedefined
 end
 
@@ -76,7 +76,7 @@ function M.extmark_leaks()
   dd(counts)
 end
 
-function estimateSize(value, visited)
+local function estimateSize(value, visited)
   if value == nil then
     return 0
   end

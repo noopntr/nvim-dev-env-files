@@ -58,11 +58,7 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
--- Diagnostics
-keymap.set("n", "<leader>r", function()
-  require("noopntrg.hsl").replaceHexWithHSL()
-end)
-
+-- Toggle inlay hints
 keymap.set("n", "<leader>i", function()
-  require("noopntrg.lsp").toggleInlayHints()
-end)
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "Toggle inlay hints" })

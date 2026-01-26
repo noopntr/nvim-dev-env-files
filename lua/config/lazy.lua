@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -18,12 +18,18 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        -- colorscheme = "sonokai",
         colorscheme = "solarized-osaka",
-        -- news = {
-        --   lazyvim = true,
-        --   neovim = true,
-        -- },
+      },
+    },
+    -- snacks.nvim is required by LazyVim - keep enabled
+    { "folke/snacks.nvim", priority = 1000, lazy = false },
+    -- Ensure neo-tree handles directory browsing
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      opts = {
+        filesystem = {
+          hijack_netrw_behavior = "open_current",
+        },
       },
     },
     -- import any extras modules here
