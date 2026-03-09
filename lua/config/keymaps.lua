@@ -58,6 +58,17 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
+-- Yank selection with filepath:linenumber prefix
+keymap.set("v", "<leader>yc", function()
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  local filepath = vim.fn.expand("%:.") -- relative path
+  local lines = vim.fn.getline(start_line, end_line)
+  local content = filepath .. ":" .. start_line .. "\n" .. table.concat(lines, "\n")
+  vim.fn.setreg("+", content)
+  print("Yanked with path: " .. filepath)
+end, { desc = "Yank with file path for agent" })
+
 -- Toggle inlay hints
 keymap.set("n", "<leader>i", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
