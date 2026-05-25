@@ -358,6 +358,98 @@ return {
       },
     })
 
+    -- Ruby / Rails (ruby-lsp)
+    lspconfig.ruby_lsp.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "ruby", "eruby" },
+      root_dir = util.root_pattern("Gemfile", ".git"),
+      init_options = {
+        formatter = "auto",
+        addonSettings = {
+          ["Ruby LSP Rails"] = {
+            enablePendingMigrationsPrompt = false,
+          },
+        },
+      },
+    })
+
+    -- C / C++ (clangd)
+    lspconfig.clangd.setup({
+      capabilities = vim.tbl_deep_extend("force", capabilities, {
+        offsetEncoding = { "utf-16" },
+      }),
+      on_attach = on_attach,
+      filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+      root_dir = util.root_pattern(
+        ".clangd",
+        ".clang-tidy",
+        ".clang-format",
+        "compile_commands.json",
+        "compile_flags.txt",
+        "configure.ac",
+        ".git"
+      ),
+      cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--completion-style=detailed",
+        "--function-arg-placeholders",
+        "--fallback-style=llvm",
+      },
+      init_options = {
+        usePlaceholders = true,
+        completeUnimported = true,
+        clangdFileStatus = true,
+      },
+    })
+
+    -- Python (basedpyright = pyright fork with better defaults)
+    lspconfig.basedpyright.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "python" },
+      root_dir = util.root_pattern(
+        "pyproject.toml",
+        "setup.py",
+        "setup.cfg",
+        "requirements.txt",
+        "Pipfile",
+        "pyrightconfig.json",
+        ".git"
+      ),
+      settings = {
+        basedpyright = {
+          disableOrganizeImports = true, -- let ruff handle imports
+          analysis = {
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "openFilesOnly",
+            typeCheckingMode = "standard",
+            inlayHints = {
+              variableTypes = true,
+              callArgumentNames = true,
+              functionReturnTypes = true,
+              genericTypes = false,
+            },
+          },
+        },
+      },
+    })
+
+    -- Python linter/formatter (ruff via LSP)
+    lspconfig.ruff.setup({
+      capabilities = capabilities,
+      on_attach = function(client, bufnr)
+        -- Let basedpyright handle hover; ruff is for lint/format/imports
+        client.server_capabilities.hoverProvider = false
+        on_attach(client, bufnr)
+      end,
+      filetypes = { "python" },
+    })
+
     -- Emmet (for HTML/CSS/JSX)
     lspconfig.emmet_ls.setup({
       capabilities = capabilities,

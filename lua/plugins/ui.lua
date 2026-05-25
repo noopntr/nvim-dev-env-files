@@ -44,7 +44,9 @@ return {
         pattern = "markdown",
         callback = function(event)
           vim.schedule(function()
-            require("noice.text.markdown").keys(event.buf)
+            if vim.api.nvim_buf_is_valid(event.buf) then
+              require("noice.text.markdown").keys(event.buf)
+            end
           end)
         end,
       })
